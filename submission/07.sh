@@ -7,4 +7,4 @@ RAW_TX="01000000000101c8b0928edebbec5e698d5f86d0474595d9f6a5b2e4e3772cd9d1005f23
 RECIPIENT_ADDRESS="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
 UTXO_ID=$(bitcoin-cli -regtest decoderawtransaction "$RAW_TX" | jq -r ".txid")
 
-bitcoin-cli -regtest -named createrawtransaction inputs='''[ { "txid": "'$TX_ID'", "vout": 0 },{ "txid": "'$TX_ID'", "vout": 1 } ]''' outputs='''{"'$RECIPIENT'": 0.2}'''
+bitcoin-cli -regtest -named createrawtransaction inputs='''[ { "txid": "'$UTXO_ID'", "vout": 0 },{ "txid": "'$UTXO_ID'", "vout": 1 } ]''' outputs='''{"'$RECIPIENT_ADDRESS'": 0.2}'''
