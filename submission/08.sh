@@ -11,4 +11,6 @@ TOTAL_AMOUNT=$(bitcoin-cli -regtest decoderawtransaction "$RAW_TX" | jq -r ".vou
 
 TOTAL_MINUS_FEE=$(echo "$TOTAL_AMOUNT" | awk '{print $1 - 0.0002}')
 
+RECIPIENT_ADDRESS="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
+
 bitcoin-cli -regtest -named createrawtransaction inputs='''[ { "txid": "'$UTXO_ID'", "vout": 0 },{ "txid": "'$UTXO_ID'", "vout": 1 } ]''' outputs='''{"'$RECIPIENT_ADDRESS'": '$TOTAL_MINUS_FEE'}'''
