@@ -7,9 +7,9 @@ RAW_TX="01000000000101c8b0928edebbec5e698d5f86d0474595d9f6a5b2e4e3772cd9d1005f23
 
 UTXO_ID=$(bitcoin-cli -regtest decoderawtransaction "$RAW_TX" | jq -r ".txid")
 
-TOTAL_AMOUNT=$(bitcoin-cli -regtest decoderawtransaction "$RAW_TX" | jq -r ".vout | .[] | .value" | awk '{s+=$1} END {print s}' )
+TOTAL_SAT=$(bitcoin-cli -regtest decoderawtransaction "$RAW_TX" | jq -r '.vout[].value' | awk '{s+=sprintf("%.0f", $1*100000000)} END {print s}')
 
-TOTAL_MINUS_FEE=$(echo "$TOTAL_AMOUNT" | awk '{print $1 - 0.0002}')
+TOTAL_MINUS_FEE=$(awk "BEGIN {printf \"%.8f\", ($TOTAL_SAT - 20000) / 100000000}")
 
 RECIPIENT_ADDRESS="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
 
